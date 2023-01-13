@@ -466,8 +466,12 @@ async def show_help_menu_step2(event: GroupMessageEvent, bot: Bot, num: str = Ar
 
 
 @reload_config.handle()
-async def reload():
-    await game_handler.load_world_data()
+async def reload(args: Message = CommandArg()):
+    default_data = args.extract_plain_text().strip()
+    if default_data == "1":
+        await game_handler.load_world_data(default=False)
+    else:
+        await game_handler.load_world_data()
     await reload_config.finish("重载完毕，请注意控制台有无错误")
 
 

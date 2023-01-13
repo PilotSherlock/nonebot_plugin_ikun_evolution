@@ -217,14 +217,15 @@ def extract_tar_files(src_dir, des_dir):
     return 0
 
 
-async def load_world_data() -> None:
+async def load_world_data(default=True) -> None:
     global world_data
     world_data = WorldInfo()
     logger.info(f'【只因进化录】资源载入中')
     path = os.path.dirname(__file__) + '/../gamedata/json/'
     path2 = os.path.dirname(__file__) + '/../gamedata/'
     files = os.listdir(path)
-    extract_tar_files(path2, path)
+    if default:
+        extract_tar_files(path2, path)
     for file in files:
         try:
             with open(f'{path}{file}', "r", encoding="utf-8") as f:
